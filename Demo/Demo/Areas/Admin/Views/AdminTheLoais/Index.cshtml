@@ -1,0 +1,79 @@
+﻿@model X.PagedList.IPagedList<Demo.Models.TheLoai>
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@{
+	int curPage = ViewBag.CurrentPage;
+	ViewData["Title"] = "Danh Sách Thể Loại " + curPage;
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-controller="AdminTheLoais" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminTheLoais">Danh Sách Thể Loại</a>
+			<span class="breadcrumb-item active">Danh Sách Thể Loại : @curPage </span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="row m-b-30">
+			<div class="col-lg-8">
+			</div>
+			<div class="col-lg-4 text-right">
+				<a class="btn btn-danger btn-tone m-r-5" asp-area="Admin" asp-controller="AdminTheLoais" asp-action="Create">Thêm</a>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover e-commerce-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Tên Thể Loại</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.MaTl</td>
+								<td>@item.TenTl</td>
+								<td class="text-right">
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminTheLoais" asp-action="Edit" asp-route-id="@item.MaTl"><i class="anticon anticon-edit"></i></a>
+										
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+										<a asp-area="Admin" asp-controller="AdminTheLoais" asp-action="Delete" asp-route-id="@item.MaTl"><i class="anticon anticon-delete"></i></a>
+										
+									</button>
+								</td>
+							</tr>
+						}
+					}
+
+				</tbody>
+			</table>
+			<div aria-label="Page navigation example">
+				<ul class="pager" style="margin:revert";>
+					<li class="">
+						Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+						@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions {
+						DisplayLinkToIndividualPages = true,
+						DisplayPageCountAndCurrentLocation = false,
+						MaximumPageNumbersToDisplay = 10,
+						LiElementClasses = new string[] { "page-item" },
+						PageClasses = new string[] { "page-link" }})
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+

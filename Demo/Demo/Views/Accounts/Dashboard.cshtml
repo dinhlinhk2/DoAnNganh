@@ -1,0 +1,153 @@
+﻿@model Demo.Models.KhachHang
+
+@{
+	ViewData["Title"] = "Dashboard";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	List<HoaDon> DanhSachDoHang = ViewBag.DonHang;
+	Demo.ModelsView.ThayDoiPassViewModel thayDoiPass = new Demo.ModelsView.ThayDoiPassViewModel();
+}
+
+<!-- Begin Main Content Area -->
+<main class="main-content">
+	<div class="breadcrumb-area breadcrumb-height" data-bg-image="assets/images/breadcrumb/bg/1-1-1920x373.jpg">
+		<div class="container h-100">
+			<div class="row h-100">
+				<div class="col-lg-12">
+					<div class="breadcrumb-item">
+						<h2 class="breadcrumb-heading">Product Related</h2>
+						<ul>
+							<li>
+								<a href="/">Home <i class="pe-7s-angle-right"></i></a>
+							</li>
+							<li>Tài Khoản Của Tôi</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="account-page-area section-space-y-axis-100">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<ul class="nav myaccount-tab-trigger" id="account-page-tab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="account-dashboard-tab" data-bs-toggle="tab" href="#account-dashboard" role="tab" aria-controls="account-dashboard" aria-selected="true">Thông Tin Tài Khoản</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="account-orders-tab" data-bs-toggle="tab" href="#account-orders" role="tab" aria-controls="account-orders" aria-selected="false">Danh Sách Đơn</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="account-details-tab" data-bs-toggle="tab" href="#account-details" role="tab" aria-controls="account-details" aria-selected="false">Thay Mật Khẩu</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="account-logout-tab" href="/dang-xuat.html" role="tab" aria-selected="false">Đăng Xuất</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-9">
+					<div class="tab-content myaccount-tab-content" id="account-page-tab-content">
+						<div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
+							<div class="myaccount-dashboard">
+								<p>
+									Xin Chào <b>@Model.TenDg.ToUpper()</b>
+								</p>
+								<p>
+									Email: @Model.Email
+								</p>
+								<p>Số Điện Thoại: @Model.Sdt</p>
+								<p>Địa Chỉ: @Model.DiaChi</p>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
+							<div class="myaccount-orders">
+								<h4 class="small-title">DANH SÁCH ĐƠN HÀNG</h4>
+								@if (DanhSachDoHang != null && DanhSachDoHang.Count() > 0)
+								{
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover">
+											<tbody>
+												<tr>
+													<th>Mã Đơn Hàng</th>
+													<th>Ngày Mua Hàng</th>
+													<th>Tổng Tiền</th>
+													<th></th>
+												</tr>
+												@foreach (var item in DanhSachDoHang)
+												{
+													<tr>
+														<td><a class="account-order-id" href="javascript:void(0)">@item.MaHd</a></td>
+														<td>@item.NgayLapHd</td>
+														<td>@item.TongGiaTri.ToString("#,##0") VNĐ</td>
+														<td>
+															<a href="javascript:void(0)" class="xemdonhang btn btn-secondary btn-primary-hover" data-madonhang="@item.MaHd"><span>Xem Đơn Hàng</span></a>
+														</td>
+													</tr>
+												}
+
+											</tbody>
+										</table>
+										<br>
+										<br>
+										<div id="records_table">
+
+										</div>
+									</div>
+								}
+								else{
+									<h4 style="color:crimson">Chưa có đơn hàng nào</h4>
+								}
+							</div>
+						</div>
+						<div class="tab-pane fade" id="account-address" role="tabpanel" aria-labelledby="account-address-tab">
+							<div class="myaccount-address">
+								<p>The following addresses will be used on the checkout page by default.</p>
+								<div class="row">
+									<div class="col">
+										<h4 class="small-title">BILLING ADDRESS</h4>
+										<address>
+											@Model.DiaChi
+										</address>
+									</div>
+									<div class="col">
+										<h4 class="small-title">SHIPPING ADDRESS</h4>
+										<address>
+											@Model.DiaChi
+										</address>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="account-details" role="tabpanel" aria-labelledby="account-details-tab">
+							@await Html.PartialAsync("ThayDoiPassPartialView",thayDoiPass)
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- Main Content Area End Here -->
+@section Scripts{
+	<script>
+		$(document).ready(function() {
+			$(".xemdonhang").click(function() {
+				var madonhang = $(this).attr("data-madonhang")
+				$.ajax({
+					url: '/DonHang/Details',
+					datatype: "json",
+					type: "POST",
+					data: { id: madonhang },
+					async: true,
+					success: function(results) {
+						$("#records_table").html("");
+						$("#records_table").html(results);
+					},
+					error: function(xhr) {
+						alert("Lỗi");
+					}
+				});
+			});
+		});
+	</script>
+}

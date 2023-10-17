@@ -1,0 +1,36 @@
+﻿@model Demo.Models.TheLoai
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Thể Loại";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-4">
+        <div class="page-header">
+			<div class="header-sub-title">
+				<nav class="breadcrumb breadcrumb-dash">
+					<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+					<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminTheLoais">Chỉnh Sửa Thể Loại</a>
+					<span class="breadcrumb-item active">Chỉnh Sửa Thể Loại</span>
+				</nav>
+			</div>
+		</div>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaTl" />
+            <div class="form-group">
+                <label asp-for="TenTl" class="control-label">Tên Thể Loại</label>
+                <input asp-for="TenTl" class="form-control" />
+                <span asp-validation-for="TenTl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Trở Lại</a>
+</div>
+

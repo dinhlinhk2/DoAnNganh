@@ -1,0 +1,83 @@
+﻿@model X.PagedList.IPagedList<Demo.Models.HoaDon>
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@{
+	int curPage = ViewBag.CurrentPage;
+	ViewData["Title"] = "Danh Sách Hóa Đơn " + curPage;
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-controller="AdminHoaDons" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminHoaDons">Danh Sách Hóa Đơn</a>
+			<span class="breadcrumb-item active">Danh Sách Hóa Đơn : @curPage </span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="row m-b-30">
+			<div class="col-lg-8">
+			</div>
+			<div class="col-lg-4 text-right">
+				<a class="btn btn-danger btn-tone m-r-5" asp-area="Admin" asp-controller="AdminHoaDons" asp-action="Create">Thêm</a>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover e-commerce-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Đơn Hàng</th>
+						<th>Ngày Mua</th>
+						<th>Tổng Tiền</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.MaHd</td>
+								<td>@item.MaDgNavigation.TenDg</td>
+								<td>@item.NgayLapHd</td>
+								<td>@item.TongGiaTri.ToString("#,##0") VNĐ</td>
+								<td class="text-right">
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminHoaDons" asp-action="Details" asp-route-id="@item.MaHd"><i class="anticon anticon-eye"></i></a>
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminHoaDons" asp-action="Edit" asp-route-id="@item.MaHd"><i class="anticon anticon-edit"></i></a>			
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+										<a asp-area="Admin" asp-controller="AdminHoaDons" asp-action="Delete" asp-route-id="@item.MaHd"><i class="anticon anticon-delete"></i></a>
+										
+									</button>
+								</td>
+							</tr>
+						}
+					}
+
+				</tbody>
+			</table>
+			<div aria-label="Page navigation example">
+				<ul class="pager" style="margin:revert";>
+					<li class="">
+						Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trong @Model.PageCount
+						@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions {
+						DisplayLinkToIndividualPages = true,
+						DisplayPageCountAndCurrentLocation = false,
+						MaximumPageNumbersToDisplay = 10,
+						LiElementClasses = new string[] { "page-item" },
+						PageClasses = new string[] { "page-link" }})
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<br />

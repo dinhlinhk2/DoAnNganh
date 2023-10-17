@@ -1,0 +1,53 @@
+﻿@model List<Sach>
+@if (Model != null)
+{
+	foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@item.MaTs
+				
+			</td>
+			<td>
+				<div class="d-flex align-items-center">
+					<img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+					<h6 class="m-b-0 m-l-10">@item.TenTs</h6>
+				</div>
+			</td>
+			<td>@item.MaTlNavigation.TenTl</td>
+			<td>@item.Gia </td>
+			<td>@item.SoLuong</td>
+			<td>
+				@if (item.SoLuong > 0)
+				{
+					<div class="d-flex align-items-center">
+						<div class="badge badge-success badge-dot m-r-10"></div>
+						<div>Còn Hàng</div>
+					</div>
+				}
+				else
+				{
+					<div class="d-flex align-items-center">
+						<div class="badge badge-success badge-dot m-r-10"></div>
+						<div>Hết Hàng</div>
+					</div>
+				}
+			</td>
+			<td>@item.Anh</td>
+			<td class="text-right">
+				<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+					<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Details" asp-route-id="@item.MaTs"><i class="anticon anticon-eye"></i></a>
+
+				</button>
+				<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+					<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Edit" asp-route-id="@item.MaTs"><i class="anticon anticon-edit"></i></a>
+
+				</button>
+				<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+					<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Delete" asp-route-id="@item.MaTs"><i class="anticon anticon-delete"></i></a>
+
+				</button>
+			</td>
+		</tr>
+	}
+}

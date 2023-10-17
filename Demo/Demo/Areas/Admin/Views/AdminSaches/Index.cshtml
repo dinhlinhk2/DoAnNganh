@@ -1,0 +1,182 @@
+﻿@model X.PagedList.IPagedList<Demo.Models.Sach>
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@using Demo.Extension
+
+@{
+	int curPage = ViewBag.CurrentPage;
+	ViewData["Title"] = "Danh Sách Sản Phẩm" + curPage;
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminSaches">Danh Sách Sản Phẩm</a>
+			<span class="breadcrumb-item active">Danh Sách Sản Phẩm : Trang @curPage</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="row m-b-30">
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-5">
+						<div class="input-affix m-v-10">
+							<i class="prefix-icon anticon anticon-search opacity-04"></i>
+							<input type="text" id="kw" name="kw" class="form-control" placeholder="Tìm Kiếm Sản Phẩm">
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="input-affix m-v-10">
+							<select class="custom-select" id="TLid" name="TLid" style="min-width: 210px;" asp-items="ViewBag.TheLoai">
+								<option disabled selected>Chọn Thể Loại</option>
+								<option value="0">Tất Cả</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 text-right">
+				<a class="btn btn-danger btn-tone m-r-5" asp-area="Admin" asp-controller="AdminSaches" asp-action="Create">Thêm</a>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover e-commerce-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Tên Sản Phẩm</th>
+						<th>Thể Loại</th>
+						<th>Giá</th>
+						<th>Số Lượng</th>
+						<th>Tồn Kho</th>
+						<th>Ảnh</th>
+					</tr>
+				</thead>
+				<tbody id="records_table">
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<tr>
+								<td>
+									@item.MaTs
+								</td>
+								<td>
+									<div class="d-flex align-items-center">
+										<img class="img-fluid rounded" src="assets/images/others/thumb-9.jpg" style="max-width: 60px" alt="">
+										<h6 class="m-b-0 m-l-10">@item.TenTs</h6>
+									</div>
+								</td>
+								<td>@item.MaTlNavigation.TenTl</td>
+								<td>@item.Gia.Value.ToString("#,##0") </td>
+								<td>@item.SoLuong</td>
+								<td>
+									@if (item.SoLuong > 0)
+									{
+										<div class="d-flex align-items-center">
+											<div class="badge badge-success badge-dot m-r-10"></div>
+											<div>Còn Hàng</div>
+										</div>
+									}
+									else
+									{
+										<div class="d-flex align-items-center">
+											<div class="badge badge-success badge-dot m-r-10"></div>
+											<div>Hết Hàng</div>
+										</div>
+									}
+								</td>
+								<td>@item.Anh</td>
+								<td class="text-right">
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Details" asp-route-id="@item.MaTs"><i class="anticon anticon-eye"></i></a>
+
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Edit" asp-route-id="@item.MaTs"><i class="anticon anticon-edit"></i></a>
+
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+										<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Delete" asp-route-id="@item.MaTs"><i class="anticon anticon-delete"></i></a>
+
+									</button>
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+			<div aria-label="Page navigation example">
+				<ul class="pager" style="margin:revert" ;>
+					<li>
+						Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trong @Model.PageCount
+						@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions {
+						DisplayLinkToIndividualPages = true,
+						DisplayPageCountAndCurrentLocation = false,
+						MaximumPageNumbersToDisplay = 10,
+						LiElementClasses = new string[] { "page-item" },
+						PageClasses = new string[] { "page-link" }})
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		$(document).ready(function() {
+			jQuery("#TLid").change(function() {
+				var TLid = jQuery(this).children(":selected").attr("value");
+				TLid = parseFloat(TLid);
+				$('#TLid option')
+					.removeAttr('selected');
+				$("#TLid > [value=" + TLid + "]").attr("selected", "true");
+				$.ajax({
+					url: "/Admin/AdminSaches/Filter",
+					datatype: "json",
+					type: "GET",
+					data: {
+						TLid: TLid
+					},
+					async: true,
+					success: function(results) {
+						if (results.status == "success") {
+							window.location.href = results.redirectUrl;
+						}
+					},
+					error: function(xhr) {
+						alert('error');
+					}
+				});
+			});
+
+            $("#kw").keyup(function() {
+                var kw = $('#kw').val();
+                $.ajax({
+					url: '/Admin/Search/findSP/',
+					datatype: "json",
+					type: "POST",
+                    data: {
+						kw: kw
+					},
+					async: true,
+                    success: function(results) {
+                        $("#records_table").html("");
+                        $("#records_table").html(results);
+					},
+                    error: function(xhr) {
+                        alert('error');
+					}
+				})
+			})
+		});
+	</script>
+}
+
+

@@ -1,0 +1,55 @@
+﻿@model Demo.Models.HoaDon
+
+@{
+    ViewData["Title"] = "Xóa Hóa Đon";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminHoaDons">Danh Sách Hóa Đơn</a>
+			<span class="breadcrumb-item active">Xóa Hóa Đơn</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">Xóa Hóa Đơn</h4>
+		<div class="table-responsive">
+			<table class="product-info-table m-t-20">
+				<tbody>
+					<tr>
+						<td>ID:</td>
+						<td class="text-dark font-weight-semibold">@Model.MaHd</td>
+					</tr>
+					<tr>
+						<td>Tên Người Mua:</td>
+						<td>@Model.MaDgNavigation.TenDg</td>
+					</tr>
+					<tr>
+						<td>Ngày Mua:</td>
+						<td>@Model.NgayLapHd</td>
+					</tr>
+					<tr>
+						<td>Tổng Hóa Đơn:</td>
+						<td>@Model.TongGiaTri.ToString("#,##0") VNĐ</td>
+					</tr>
+					<tr>
+						<td>Xác nhận xóa:</td>
+						<td>
+							<form asp-action="Delete" asp-route-id="@Model.MaHd">
+								<input type="hidden" asp-for="MaHd" />
+								<input type="submit" value="Xóa" class="btn btn-danger" /> |
+								<a asp-action="Index">Trợ Lại</a>
+							</form>
+						</td>
+						
+					</tr>
+
+			</table>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model Demo.Models.TheLoai
+
+@{
+	ViewData["Title"] = "Xóa Thể Loại";
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminTheLoais">Danh Sách Thể Loại</a>
+			<span class="breadcrumb-item active">Xóa Thể Loại</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">Xóa Thể Loại</h4>
+		<div class="table-responsive">
+			<table class="product-info-table m-t-20">
+				<tbody>
+					<tr>
+						<td>ID:</td>
+						<td class="text-dark font-weight-semibold">@Model.MaTl</td>
+					</tr>
+					<tr>
+						<td>Tên Thể Loại:</td>
+						<td>@Model.TenTl</td>
+					</tr>
+					<tr>
+						<td>Xác nhận xóa:</td>
+						<td>
+							<form asp-action="Delete" asp-route-id="@Model.MaTl">
+								<input type="hidden" asp-for="MaTl" />
+								<input type="submit" value="Xóa" class="btn btn-danger" /> |
+								<a asp-action="Index">Back to List</a>
+							</form>
+						</td>
+						
+					</tr>
+
+			</table>
+		</div>
+
+	</div>
+</div>

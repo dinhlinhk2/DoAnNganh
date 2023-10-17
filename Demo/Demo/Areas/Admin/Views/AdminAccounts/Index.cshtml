@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Demo.Models.Account>
+
+@{
+	ViewData["Title"] = "Danh Sách Tài Khoản";
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminAccounts">Danh Sách Tài Khoản</a>
+			<span class="breadcrumb-item active">Danh Sách Tài Khoản</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="row m-b-30">
+			<div class="col-lg-8">
+				<div class="d-md-flex">
+					<div class="m-b-10 m-r-15">
+						<select class="custom-select" id="idRole" name="idRole" style="min-width: 200px;" asp-items="ViewBag.QuyenTruyCap">
+							<option disabled selected>
+								Chọn Quyền Truy Cập
+							</option>
+							<option value="0">Tất Cả</option>
+						</select>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-lg-4 text-right">
+				<a class="btn btn-danger btn-tone m-r-5" asp-area="Admin" asp-controller="AdminAccounts" asp-action="Create">Thêm</a>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover e-commerce-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Số Điện Thoại</th>
+						<th>Mật Khẩu</th>
+						<th>Quyền</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.AccountId</td>
+								<td>@item.Phone</td>
+								<td>@item.MatKhau</td>
+								<td>@item.Role.RoleName</td>
+								<td class="text-right">
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Edit" asp-route-id="@item.AccountId"><i class="anticon anticon-edit"></i></a>
+
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+										<a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Delete" asp-route-id="@item.AccountId"><i class="anticon anticon-delete"></i></a>
+
+									</button>
+								</td>
+							</tr>
+						}
+					}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>*@
+	<script>
+		$(document).ready(function() {
+			jQuery("#idRole").change(function() {
+				var idRole = jQuery(this).children(":selected").attr("value");
+				idRole = parseFloat(idRole);
+				$('#idRole option')
+					.removeAttr('selected');
+				$("#idRole > [value=" + idRole + "]").attr("selected", "true");
+				$.ajax({
+					url: "/Admin/AdminAccounts/Filter",
+					datatype: "json",
+					type: "GET",
+					data: {
+						idRole: idRole
+					},
+					async: true,
+					success: function(results) {
+						if (results.status == "success") {
+							window.location.href = results.redirectUrl;
+						}
+					},
+					error: function(xhr) {
+						alert('error');
+					}
+				});
+			});
+		});
+	</script>
+}

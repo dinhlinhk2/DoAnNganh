@@ -1,0 +1,94 @@
+﻿@model Demo.Models.HoaDon
+
+@{
+	ViewData["Title"] = "Thông Tin Đơn Hàng" + Model.MaHd;
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+	List<ChiTietHoaDon> chitietHD = ViewBag.ChiTiet;
+
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminHoaDons">Danh Sách Hóa Đơn</a>
+			<span class="breadcrumb-item active">Thông Tin Hóa Đơn</span>
+		</nav>
+	</div>
+</div>
+
+<!-- Content Wrapper START -->
+<div class="card">
+	<div class="card-body">
+		<div id="invoice" class="p-h-30">
+
+			<div class="row m-t-20 lh-2">
+				<div class="col-sm-9">
+					<h3 class="p-l-10 m-t-10">Thông Tin Người Nhận:</h3>
+					<address class="p-l-10">
+						<span class="font-weight-semibold text-dark">@Model.MaDgNavigation.TenDg</span><br>
+						<span>@Model.MaDgNavigation.DiaChi</span><br>
+						<span class="text-dark" title="Phone">Phone:</span>
+						<span>@Model.MaDgNavigation.Sdt</span>
+					</address>
+				</div>
+				<div class="col-sm-3">
+					<div class="m-t-80">
+						<div class="text-dark text-uppercase d-inline-block">
+							<span class="font-weight-semibold text-dark">Thông Tin Đơn Hàng :</span>
+						</div>
+						<div class="float-right">#@Model.MaHd</div>
+					</div>
+					<div class="text-dark text-uppercase d-inline-block">
+						<span class="font-weight-semibold text-dark">Ngày Mua :</span>
+					</div>
+					<div class="float-right">@Model.NgayLapHd</div>
+				</div>
+			</div>
+			<div class="m-t-20">
+				<div class="table-responsive">
+					<table class="product-info-table m-t-20">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>Sản Phẩm</th>
+								<th>Số Lượng</th>
+								<th>Đơn Giá</th>
+								<th>Thành Tiền</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (chitietHD != null && chitietHD.Count() > 0)
+							{
+								int i = 1;
+								foreach (var item in chitietHD)
+								{
+									string url = $"/{item.MaTsNavigation.TenTs}-{item.MaTs}.html";
+									<tr>
+										<th>@i</th>
+										<td><a target="_blank" href="@url">@item.MaTsNavigation.TenTs</a></td>
+										<td>@item.SoLuong</td>
+										<td>@item.DonGia.ToString("#,##0") VNĐ</td>
+										<td>@item.ThanhTien.ToString("#,##0") VNĐ</td>
+									</tr>
+									i++;
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+				<div class="row m-t-30 lh-1-8">
+					<div class="col-sm-12">
+						<div class="float-right text-right">
+							<h3><span class="font-weight-semibold text-dark">Tổng Tiền :</span>@Model.TongGiaTri.ToString("#,##0") VNĐ</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Content Wrapper END -->
+<div>
+	<a asp-action="Index">Trở Lại</a>
+</div>

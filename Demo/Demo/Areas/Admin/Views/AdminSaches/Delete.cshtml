@@ -1,0 +1,72 @@
+﻿@model Demo.Models.Sach
+
+@{
+	ViewData["Title"] = "Xóa Sản Phẩm";
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+<div class="page-header">
+			<div class="header-sub-title">
+				<nav class="breadcrumb breadcrumb-dash">
+					<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+					<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminSaches">Danh Sách Sản Phẩm</a>
+					<span class="breadcrumb-item active">Xóa Sản Phẩm</span>
+				</nav>
+			</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">Xóa Sản Phẩm</h4>
+		<div class="table-responsive">
+			<table class="product-info-table m-t-20">
+				<tbody>
+					<tr>
+						<td>ID:</td>
+						<td class="text-dark font-weight-semibold">@Model.MaTs</td>
+					</tr>
+					<tr>
+						<td>Tên Sách:</td>
+						<td>@Model.TenTs</td>
+					</tr>
+					<tr>
+						<td>Thể Loại:</td>
+						<td>@Model.MaTlNavigation.TenTl</td>
+					</tr>
+					<tr>
+						<td>Gia:</td>
+						<td>@Model.Gia</td>
+					</tr>
+					<tr>
+						<td>Năm Sản Xuất:</td>
+						<td>@Model.NamXb</td>
+					</tr>
+					<tr>
+						<td>Số Lượng:</td>
+						<td>@Model.SoLuong</td>
+					</tr>
+					<tr>
+						<td>Nhà Sản Xuất:</td>
+						<td>@Model.MaNsxNavigation.TenNsx</td>
+					</tr>
+					<tr>
+						<td>Kho:</td>
+						<td>@Model.MaKhoNavigation.TenSach</td>
+					</tr>
+					<tr>
+						<td>Ảnh Sản Phẩm:</td>
+						<td>
+							<img width="200" src="~/images/saches/@Model.Anh" alt="@Model.TenTs" />
+						</td>
+					</tr>
+						<td>Xác nhận xóa:</td>
+						<td>
+							<form asp-action="Delete" asp-route-id="@Model.MaTs" asp-controller="AdminSaches">
+								<input type="hidden" asp-for="MaTs" />
+								<input type="submit" value="Xóa" class="btn btn-danger" /> |
+								<a asp-action="Index">Trở Lại</a>
+							</form>
+						</td>
+			</table>
+		</div>
+
+	</div>
+</div>
