@@ -1,0 +1,44 @@
+﻿@model Demo.ModelsView.MuaHangSuccessVM
+
+<div class="about-banner different-bg-position section-space-y-axis-100" data-bg-image="assets/images/about/banner/1-1-1920x598.jpg" style="background-image: url(&quot;assets/images/about/banner/1-1-1920x598.jpg&quot;);">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-6 col-lg-5">
+				<div class="parallax-img-wrap">
+					<div class="papaya">
+						<div class="scene fill" style="transform: translate3d(0px, 0px, 0px) rotate(0.0001deg); transform-style: preserve-3d; backface-visibility: hidden; position: relative; pointer-events: none;">
+							<div class="expand-width" data-depth="0.2" style="transform: translate3d(-11.1px, -5.6px, 0px); transform-style: preserve-3d; backface-visibility: hidden; position: relative; display: block; left: 0px; top: 0px;">
+								<img src="~/images/saches/stt-cam-on-khach-hang-1.jpg" alt="Banner Images">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-12">
+				<div class="your-order">
+					<h3>ĐẶT HÀNG THÀNH CÔNG</h3>
+					<div class="your-order-table table-responsive">
+						<table class="table">
+							<thead>
+								<p>Mã Đơn Hàng: @Model.DonHangID</p>
+								<p>Cảm Ơn Bạn Đã Đặt Hàng</p>
+							</thead>
+							<tbody>
+								<h3>THÔNG TIN ĐƠN HÀNG</h3>
+								<p>Thông Tin Người Mua</p>
+								<p>Người Nhận Hàng: @Model.FullName</p>
+								<p>Số Điện Thoại: @Model.Phone</p>
+								<p>Địa Chỉ: @Model.Address</p>
+							</tbody>
+							<tfoot>
+								<h3>BẠN CẦN HỖ TRỢ HÃY LIÊN HỆ CHO CHÚNG TÔI</h3>
+								<p>Số Điện Thoại: 0356636960</p>
+								<p>Email: 2051052074linh@ou.edu.vn</p>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

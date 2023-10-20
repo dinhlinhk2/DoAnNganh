@@ -1,0 +1,24 @@
+﻿@model Demo.ModelsView.ThayDoiPassViewModel
+<div class="myaccount-details">
+	<form asp-controller="Accounts" asp-action="ChangePassword" method="post" class="myaccount-form">
+		<div class="myaccount-form-inner">
+			<div class="single-input">
+				<label>Mật Khẩu Hiện Tại</label>
+				<input asp-for="PasswordNow" type="password">
+			</div>
+			<div class="single-input">
+				<label>Nhập Mật Khẩu Mới</label>
+				<input asp-for="Password" type="password">
+			</div>
+			<div class="single-input">
+				<label>Nhập Lại Mật Khẩu Mới</label>
+				<input asp-for="ConfirmPassword" type="password">
+			</div>
+			<div class="single-input">
+				<button class="btn btn-custom-size lg-size btn-secondary btn-primary-hover rounded-0" type="submit">
+					<span>LƯU THAY ĐỔI</span>
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

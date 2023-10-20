@@ -1,0 +1,38 @@
+﻿@model Demo.Models.TheLoai
+
+@{
+    ViewData["Title"] = "Thông TinThể Loại";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminTheLoais">Danh Sách Thể Loại</a>
+			<span class="breadcrumb-item active">Thông Tin Thể Loại</span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<h4 class="card-title">Thông Tin Thể Loại</h4>
+		<div class="table-responsive">
+			<table class="product-info-table m-t-20">
+				<tbody>
+					<tr>
+						<td>ID:</td>
+						<td class="text-dark font-weight-semibold">@Model.MaTl</td>
+					</tr>
+					<tr>
+						<td>Tên Thể Loại:</td>
+						<td>@Model.TenTl</td>
+					</tr>
+			</table>
+		</div>
+
+	</div>
+</div>
+<div>
+	<a asp-action="Index">Trở Lại</a>
+</div>

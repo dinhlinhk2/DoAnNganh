@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+
+@{
+	var result = authorizationService.AuthorizeAsync(this.User, "ViewManageMenu");
+}
+@if (result.IsCompletedSuccessfully)
+{
+	<div class="side-nav">
+		<div class="side-nav-inner">
+			<ul class="side-nav-menu scrollable">
+				<li class="nav-item ">
+					<a class="dropdown-toggle" asp-area="Admin" asp-controller="Home" asp-action="Index">
+						<span class="icon-holder">
+							<i class="anticon anticon-dashboard"></i>
+						</span>
+						<span class="title">Dashboard</span>
+						<span class="arrow">
+							<i class="arrow-icon"></i>
+						</span>
+					</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle" href="javascript:void(0);">
+						<span class="icon-holder">
+							<i class="anticon anticon-appstore"></i>
+						</span>
+						<span class="title">Quản Lý Đơn Hàng</span>
+						<span class="arrow">
+							<i class="arrow-icon"></i>
+						</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a asp-area="Admin" asp-controller="AdminHoaDons" asp-action="Index">Danh Sách Đơn Hàng</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle" href="javascript:void(0);">
+						<span class="icon-holder">
+							<i class="anticon anticon-build"></i>
+						</span>
+						<span class="title">Quản Lý Sản Phẩm</span>
+						<span class="arrow">
+							<i class="arrow-icon"></i>
+						</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a asp-area="Admin" asp-controller="AdminSaches" asp-action="Index">Danh Sách Sản Phẩm</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle" href="javascript:void(0);">
+						<span class="icon-holder">
+							<i class="anticon anticon-hdd"></i>
+						</span>
+						<span class="title">Quản Lý Khách Hàng</span>
+						<span class="arrow">
+							<i class="arrow-icon"></i>
+						</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Index">Danh Sách Khách Hàng</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="dropdown-toggle" href="javascript:void(0);">
+						<span class="icon-holder">
+							<i class="anticon anticon-table"></i>
+						</span>
+						<span class="title">Quản Lý Hệ Thống</span>
+						<span class="arrow">
+							<i class="arrow-icon"></i>
+						</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a asp-area="Admin" asp-controller="AdminTheLoais" asp-action="Index">Quản Lý Thể Loại</a>
+						</li>
+						<li>
+							<a asp-area="Admin" asp-controller="AdminRoles" asp-action="Index">Quản Lý Người Truy Cập</a>
+						</li>
+						<li>
+							<a asp-area="Admin" asp-controller="AdminAccounts" asp-action="Index">Quản Lý Tài Khoản</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+}

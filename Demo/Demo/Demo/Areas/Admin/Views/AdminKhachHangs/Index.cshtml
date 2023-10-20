@@ -1,0 +1,120 @@
+﻿@model X.PagedList.IPagedList<Demo.Models.KhachHang>
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@{
+	int curPage = ViewBag.CurrentPage;
+	ViewData["Title"] = "Danh Sách Khách Hàng " + curPage;
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="page-header">
+	<div class="header-sub-title">
+		<nav class="breadcrumb breadcrumb-dash">
+			<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Index" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+			<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminKhachHangs">Danh Sách Khách Hàng</a>
+			<span class="breadcrumb-item active">Danh Sách Khách Hàng : @curPage </span>
+		</nav>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body">
+		<div class="row m-b-30">
+			<div class="col-lg-8">
+				<div class="row">
+					<div class="col-md-5">
+						<div class="input-affix m-v-10">
+							<i class="prefix-icon anticon anticon-search opacity-04"></i>
+							<input type="text" id="kw" name="kw" class="form-control" placeholder="Tìm Kiếm Sản Phẩm">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover e-commerce-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Họ và Tên</th>
+						<th>Địa Chỉ</th>
+						<th>Số Điện Thoại</th>
+						<th>Giới Tính</th>
+						<th>Mật Khẩu</th>
+						<th>Ngày Tạo</th>
+					</tr>
+				</thead>
+				<tbody id="records_table">
+					@if (Model != null)
+					{
+						foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.MaDg</td>
+								<td>@item.TenDg</td>
+								<td>@item.DiaChi</td>
+								<td>@item.Sdt</td>
+								<td>@item.GioiTinh</td>
+								<td>@item.MatKhau</td>
+								<td>@item.NgayTao</td>
+								<td class="text-right">
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Details" asp-route-id="@item.MaDg"><i class="anticon anticon-eye"></i></a>
+
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+										<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Edit" asp-route-id="@item.MaDg"><i class="anticon anticon-edit"></i></a>
+									</button>
+									<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+										<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Delete" asp-route-id="@item.MaDg"><i class="anticon anticon-delete"></i></a>
+									</button>
+								</td>
+							</tr>
+						}
+					}
+
+				</tbody>
+			</table>
+			<div aria-label="Page navigation example">
+				<ul class="pager" style="margin:revert" ;>
+					<li class="">
+						Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) trong @Model.PageCount
+						@Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), new PagedListRenderOptions {
+						DisplayLinkToIndividualPages = true,
+						DisplayPageCountAndCurrentLocation = false,
+						MaximumPageNumbersToDisplay = 10,
+						LiElementClasses = new string[] { "page-item" },
+						PageClasses = new string[] { "page-link" }})
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<br />
+@section Scripts{
+	<script>
+		$(document).ready(function() {
+			$("#kw").keyup(function() {
+				var kw = $('#kw').val();
+				$.ajax({
+					url: '/Admin/Search/findKH/',
+					datatype: "json",
+					type: "POST",
+					data: {
+						kw: kw
+					},
+					async: true,
+					success: function(results) {
+						$("#records_table").html("");
+						$("#records_table").html(results);
+					},
+					error: function(xhr) {
+						alert('error');
+					}
+				})
+			})
+		});
+	</script>
+}
+

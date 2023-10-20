@@ -1,0 +1,42 @@
+﻿@model Demo.Models.Role
+
+@{
+	ViewData["Title"] = "Chỉnh Sửa Quyền";
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="page-header">
+			<div class="header-sub-title">
+				<nav class="breadcrumb breadcrumb-dash">
+					<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+					<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminRoles">Danh Sách Truy Cập</a>
+					<span class="breadcrumb-item active">Chỉnh Sửa Quyền Truy Cập</span>
+				</nav>
+			</div>
+		</div>
+		<form asp-action="Edit" asp-route-id="@Model.RoleId" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="RoleId" />
+			<div class="form-group">
+				<label asp-for="RoleName" class="control-label">Tên Quyền</label>
+				<input asp-for="RoleName" class="form-control" />
+				<span asp-validation-for="RoleName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Description" class="control-label">Mô Tả</label>
+				<input asp-for="Description" class="form-control" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Lưu" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+

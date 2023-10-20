@@ -1,0 +1,69 @@
+﻿@model Demo.Models.Sach
+
+@{
+	ViewData["Title"] = "Chỉnh Sửa Sản Phẩm" + Model.TenTs;
+	Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="page-header">
+			<div class="header-sub-title">
+				<nav class="breadcrumb breadcrumb-dash">
+					<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+					<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminSaches">Danh Sách Sản Phẩm</a>
+					<span class="breadcrumb-item active">Chỉnh Sửa Sản Phẩm</span>
+				</nav>
+			</div>
+		</div>
+        <form asp-action="Edit" asp-controller="AdminSaches" asp-route-id="@Model.MaTs" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="MaTs" type="hidden"/>
+			<input asp-for="Anh" type="hidden"/>
+			<input asp-for="NamXb" type="hidden"/>
+            <div class="form-group">
+                <label asp-for="TenTs" class="control-label">Tên Sách</label>
+                <input asp-for="TenTs" class="form-control" />
+                <span asp-validation-for="TenTs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaTl" class="control-label">Mã Thể Loại</label>
+                <select asp-for="MaTl" class="form-control" asp-items="ViewBag.DanhMuc"></select>
+                <span asp-validation-for="MaTl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label">Giá</label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuong" class="control-label">Số Lượng</label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaNsx" class="control-label">Mã Nhà Sản Xuất</label>
+                <select asp-for="MaNsx" class="form-control" asp-items="ViewBag.MaNsx"></select>
+                <span asp-validation-for="MaNsx" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaKho" class="control-label">Mã Kho</label>
+                <select asp-for="MaKho" class="form-control" asp-items="ViewBag.MaKho"></select>
+                <span asp-validation-for="MaKho" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Anh" class="control-label">Ảnh Đại Diện</label>
+                <input name="fileAnh" asp-for="Anh" type="file" class ="form-control"/>
+                <span asp-validation-for="Anh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Trở Lại</a>
+</div>
+

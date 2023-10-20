@@ -1,0 +1,46 @@
+﻿@model Demo.Models.HoaDon
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Hóa Đon";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="page-header">
+			<div class="header-sub-title">
+				<nav class="breadcrumb breadcrumb-dash">
+					<a asp-area="Admin" asp-action="Index" asp-controller="Home" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+					<a class="breadcrumb-item" asp-area="Admin" asp-action="Index" asp-controller="AdminHoaDons">Chỉnh Sửa Hóa Đon</a>
+					<span class="breadcrumb-item active">Chỉnh Sửa Hóa Đon</span>
+				</nav>
+			</div>
+		</div>
+        <form asp-action="Edit" asp-controller="AdminAccounts" asp-route-id="@Model.MaHd" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaHd" />
+            <div class="form-group">
+                <label asp-for="MaDg" class="control-label">Tên Người Mua</label>
+                <input asp-for="MaDg" class="form-control" />
+                <span asp-validation-for="MaDg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayLapHd" class="control-label">Ngày Mua</label>
+                <input asp-for="NgayLapHd" class="form-control" />
+                <span asp-validation-for="NgayLapHd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TongGiaTri" class="control-label">Tổng Giá Trị</label>
+                <input asp-for="TongGiaTri" class="form-control" />
+                <span asp-validation-for="TongGiaTri" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Trở Lại</a>
+</div>

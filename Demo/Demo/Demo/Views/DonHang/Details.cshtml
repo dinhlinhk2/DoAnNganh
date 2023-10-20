@@ -1,0 +1,41 @@
+﻿@model Demo.ModelsView.XemDonHang
+
+@{
+	var total = Model.ChiTietDonHang.Sum(x => x.ThanhTien).ToString("#,##0");
+	List<ChiTietHoaDon> chitietHD = ViewBag.ChiTiet;
+}
+
+<h3>Thông Tin Đơn Hàng:#@Model.DonHang.MaHd</h3>
+<br />
+<p>Ngày Đặt Hàng: @Model.DonHang.NgayLapHd</p>
+<p>Tổng Giá Trị: @total VNĐ</p>
+
+<div class="table-responsive">
+	<table class="table table-bordered table-hover">
+		<tbody>
+			<tr>
+				<th>#Mã Đơn Hàng</th>
+				<th>Tên Sản Phẩm</th>
+				<th>Số Lượng</th>
+				<th>Đơn Giá</th>
+				<th>Tổng Tiền</th>
+			</tr>
+			@foreach (var item in Model.ChiTietDonHang)
+			{
+				<tr>
+					<td>#@item.MaHd</td>
+					<td>@item.MaTsNavigation.TenTs</td>
+					<td>@item.SoLuong</td>
+					<td>@item.DonGia.ToString("#,##0") VNĐ</td>
+					<td>@item.ThanhTien.ToString("#,##0") VNĐ</td>
+				</tr>
+			}
+
+
+		</tbody>
+	</table>
+	<br>
+	<br>
+	<div id="records_table">
+	</div>
+</div>

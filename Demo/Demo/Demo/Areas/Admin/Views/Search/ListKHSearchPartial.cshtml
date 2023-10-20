@@ -1,0 +1,28 @@
+﻿@model List<KhachHang>
+@if (Model != null)
+{
+	foreach (var item in Model)
+	{
+		<tr>
+			<td>@item.MaDg</td>
+			<td>@item.TenDg</td>
+			<td>@item.DiaChi</td>
+			<td>@item.Sdt</td>
+			<td>@item.GioiTinh</td>
+			<td>@item.MatKhau</td>
+			<td>@item.NgayTao</td>
+			<td class="text-right">
+				<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+					<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Details" asp-route-id="@item.MaDg"><i class="anticon anticon-eye"></i></a>
+
+				</button>
+				<button class="btn btn-icon btn-hover btn-sm btn-rounded pull-right">
+					<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Edit" asp-route-id="@item.MaDg"><i class="anticon anticon-edit"></i></a>
+				</button>
+				<button class="btn btn-icon btn-hover btn-sm btn-rounded">
+					<a asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Delete" asp-route-id="@item.MaDg"><i class="anticon anticon-delete"></i></a>
+				</button>
+			</td>
+		</tr>
+	}
+}
